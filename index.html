@@ -39,6 +39,16 @@ a{ text-decoration:none; color:inherit;}
 button{ font-family:inherit; cursor:pointer; border:none;}
 img{max-width:100%; display:block;}
 
+/* ===== GLOBAL INTERACTIVITY ===== */
+[onclick], .clickable, label.filter-opt, .navlinks button, .cat-tabs button, .edu-tabs button{ cursor:pointer; }
+button:disabled, .btn:disabled{ cursor:not-allowed !important; opacity:.45; transform:none !important; }
+button:disabled:hover, .btn:disabled:hover{ transform:none !important; box-shadow:none !important; }
+.btn:active:not(:disabled), .add-btn:active, .cart-btn:active, .select-btn:active, .chip:active, .radio-opt:active, .step.clickable:active{ transform:scale(0.95); }
+button:focus-visible, [tabindex]:focus-visible, input:focus-visible, .radio-opt:focus-visible, .chip:focus-visible{
+  outline:2.5px solid var(--accent); outline-offset:2px; border-radius:8px;
+}
+* { -webkit-tap-highlight-color: transparent; }
+
 /* ===== NAV ===== */
 .navbar{
   position:sticky; top:0; z-index:100;
@@ -122,7 +132,9 @@ h1,h2,h3,h4{ letter-spacing:-0.03em; font-weight:800; color:var(--dark); }
 
 /* How it works */
 .steps-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;}
-.step{ display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; min-width:110px;}
+.step{ display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; min-width:110px; cursor:pointer; padding:10px; border-radius:16px; transition:.2s;}
+.step:hover{ background:var(--bg); transform:translateY(-4px);}
+.step:hover .step-num{ box-shadow:0 0 0 6px rgba(255,179,0,0.15);}
 .step-num{ width:52px; height:52px; border-radius:50%; background:var(--dark); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px;}
 .step.done .step-num{ background:linear-gradient(135deg,var(--primary),var(--accent)); }
 .step span.label{ font-size:13.5px; font-weight:700; color:var(--dark); text-align:center;}
@@ -140,10 +152,12 @@ input[type=range]{ width:100%; accent-color:var(--primary); height:6px;}
 .range-value{ text-align:right; font-weight:800; color:var(--dark); font-size:15px; margin-top:6px;}
 input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm); border:1.5px solid var(--line); font-size:15px; font-family:inherit; background:#fff;}
 .chip-row{ display:flex; gap:10px; flex-wrap:wrap;}
-.chip{ padding:10px 18px; border-radius:100px; border:1.5px solid var(--line); background:#fff; font-weight:600; font-size:13.5px; color:var(--muted); transition:.2s;}
+.chip{ padding:10px 18px; border-radius:100px; border:1.5px solid var(--line); background:#fff; font-weight:600; font-size:13.5px; color:var(--muted); transition:.2s; cursor:pointer;}
+.chip:hover:not(.selected){ border-color:var(--dark); color:var(--dark); transform:translateY(-2px); box-shadow:0 6px 16px -6px rgba(20,33,61,0.2);}
 .chip.selected{ background:var(--dark); color:#fff; border-color:var(--dark);}
 .radio-row{ display:flex; gap:12px;}
-.radio-opt{ flex:1; padding:16px; border-radius:var(--radius-sm); border:1.5px solid var(--line); text-align:center; font-weight:700; font-size:14px; background:#fff; color:var(--muted);}
+.radio-opt{ flex:1; padding:16px; border-radius:var(--radius-sm); border:1.5px solid var(--line); text-align:center; font-weight:700; font-size:14px; background:#fff; color:var(--muted); cursor:pointer; transition:.2s;}
+.radio-opt:hover:not(.selected){ border-color:var(--primary); transform:translateY(-2px); box-shadow:0 6px 16px -6px rgba(255,179,0,0.25);}
 .radio-opt.selected{ border-color:var(--primary); background:rgba(255,179,0,0.08); color:var(--dark);}
 
 .results-card{ background:var(--dark); color:#fff; border-radius:var(--radius); padding:36px; position:sticky; top:100px;}
@@ -162,6 +176,8 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .quote-table th{ text-align:left; font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); padding:0 20px 8px;}
 .quote-table td{ background:var(--white); padding:20px; font-weight:600; box-shadow:var(--shadow-card); border:2px solid transparent;}
 .quote-table tr.selected td{ border-color:var(--primary); }
+.quote-table tr:not(:first-child){ cursor:pointer;}
+.quote-table tr:not(:first-child):hover td{ background:#FBFCFE; box-shadow:0 4px 14px -6px rgba(20,33,61,0.12);}
 .quote-table td:first-child{ border-radius:16px 0 0 16px; font-weight:800;}
 .quote-table td:last-child{ border-radius:0 16px 16px 0; }
 .vendor-name{ display:flex; align-items:center; gap:10px;}
@@ -187,7 +203,8 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
 .product-card{ background:var(--white); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-card); transition:.3s; cursor:pointer;}
 .product-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-soft);}
-.product-img{ height:160px; background:linear-gradient(135deg,#EFF3F8,#DCE6F5); display:flex; align-items:center; justify-content:center; font-size:44px; position:relative;}
+.product-img{ height:160px; background:linear-gradient(135deg,#EFF3F8,#DCE6F5); display:flex; align-items:center; justify-content:center; font-size:44px; position:relative; overflow:hidden; transition:.3s;}
+.product-card:hover .product-img{ font-size:48px; background:linear-gradient(135deg,#E5EDF9,#D3E1F5);}
 .ar-badge{ position:absolute; top:12px; right:12px; background:rgba(20,33,61,0.85); color:#fff; font-size:10.5px; font-weight:700; padding:4px 10px; border-radius:100px;}
 .product-body{ padding:18px 20px 22px;}
 .product-body .cat{ font-size:11.5px; color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
@@ -216,6 +233,8 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 /* ===== CHECKOUT ===== */
 .checkout-progress{ display:flex; justify-content:center; gap:0; margin-bottom:48px;}
 .co-step{ display:flex; align-items:center;}
+.co-step.done{ cursor:pointer;}
+.co-step.done .co-dot:hover{ transform:scale(1.12); box-shadow:0 0 0 5px rgba(54,194,117,0.2);}
 .co-dot{ width:36px; height:36px; border-radius:50%; background:#EFF3F8; color:var(--muted); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px;}
 .co-step.done .co-dot{ background:var(--accent); color:#fff;}
 .co-step.current .co-dot{ background:var(--dark); color:#fff;}
@@ -242,7 +261,8 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .edu-tabs button{ padding:12px 22px; border-radius:100px; background:var(--white); font-weight:700; font-size:14px; color:var(--muted); box-shadow:var(--shadow-card);}
 .edu-tabs button.active{ background:var(--dark); color:#fff;}
 .edu-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-.edu-card{ background:var(--white); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-card); transition:.3s;}
+.edu-card{ background:var(--white); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-card); transition:.3s; cursor:pointer;}
+.edu-card:hover{ box-shadow:var(--shadow-soft);}
 .edu-card:hover{ transform:translateY(-6px);}
 .edu-thumb{ height:150px; background:linear-gradient(135deg,var(--dark),var(--dark-2)); display:flex; align-items:center; justify-content:center; font-size:38px; color:var(--primary); position:relative;}
 .play-icon{ position:absolute; width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:16px; color:#fff;}
@@ -250,7 +270,10 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .edu-body .tag{ font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase;}
 .edu-body h4{ font-size:15.5px; margin:8px 0 6px;}
 .edu-body p{ font-size:13.5px; color:var(--muted); line-height:1.5;}
-.faq-item{ background:var(--white); border-radius:16px; padding:20px 24px; margin-bottom:12px; box-shadow:var(--shadow-card); cursor:pointer;}
+.faq-item{ background:var(--white); border-radius:16px; padding:20px 24px; margin-bottom:12px; box-shadow:var(--shadow-card); cursor:pointer; border:1.5px solid transparent; transition:.2s;}
+.faq-item:hover{ border-color:var(--primary);}
+.faq-item .faq-q span{ transition:.3s; display:inline-block;}
+.faq-item.open .faq-q span{ transform:rotate(45deg); color:var(--primary);}
 .faq-q{ display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:15px;}
 .faq-a{ max-height:0; overflow:hidden; transition:.3s; color:var(--muted); font-size:14px; line-height:1.6;}
 .faq-item.open .faq-a{ max-height:200px; margin-top:12px;}
@@ -271,7 +294,12 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .notif{ background:var(--white); border-radius:16px; padding:14px 20px; box-shadow:var(--shadow-card); display:flex; align-items:center; gap:12px; font-size:13.5px; font-weight:600; max-width:340px;}
 .notif .dot2{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0;}
 .timeline-v{ display:flex; flex-direction:column; gap:0; max-width:560px; margin:0 auto;}
-.tl-item{ display:flex; gap:20px; position:relative; padding-bottom:36px;}
+.tl-item{ display:flex; gap:20px; position:relative; padding-bottom:36px; cursor:pointer; border-radius:16px; transition:.2s; padding:14px 14px 36px;}
+.tl-item:hover{ background:var(--white); box-shadow:var(--shadow-card);}
+.tl-detail{ max-height:0; overflow:hidden; transition:.3s ease; font-size:13px; color:var(--muted); background:var(--bg); border-radius:10px; margin-top:10px;}
+.tl-item.expanded .tl-detail{ max-height:200px; padding:12px 14px;}
+.tl-detail .row{ display:flex; justify-content:space-between; padding:4px 0;}
+.tl-detail .row b{ color:var(--dark);}
 .tl-item:last-child{ padding-bottom:0;}
 .tl-dot-wrap{ display:flex; flex-direction:column; align-items:center;}
 .tl-dot{ width:44px; height:44px; border-radius:50%; background:#EFF3F8; color:var(--muted); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px; z-index:1;}
@@ -287,7 +315,8 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .admin-shell{ display:grid; grid-template-columns:240px 1fr; min-height:600px; background:var(--white); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-soft);}
 .admin-side{ background:var(--dark); color:#fff; padding:28px 16px;}
 .admin-side .a-logo{ font-weight:800; font-size:17px; padding:0 12px 24px;}
-.admin-nav button{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; border-radius:12px; color:rgba(255,255,255,0.65); font-weight:600; font-size:14px; margin-bottom:4px;}
+.admin-nav button{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; border-radius:12px; color:rgba(255,255,255,0.65); font-weight:600; font-size:14px; margin-bottom:4px; transition:.2s;}
+.admin-nav button:hover:not(.active){ background:rgba(255,255,255,0.06); color:#fff;}
 .admin-nav button.active{ background:rgba(255,255,255,0.1); color:#fff;}
 .admin-main{ padding:32px; }
 .admin-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:28px;}
@@ -298,6 +327,7 @@ input[type=number]{ width:100%; padding:14px 16px; border-radius:var(--radius-sm
 .admin-table{ width:100%; border-collapse:collapse;}
 .admin-table th{ text-align:left; font-size:11.5px; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:2px solid var(--line);}
 .admin-table td{ padding:14px; border-bottom:1px solid var(--line); font-size:14px;}
+.admin-table tr:hover td{ background:var(--bg);}
 .status-chip{ padding:5px 12px; border-radius:100px; font-size:11.5px; font-weight:700;}
 .status-chip.pending{ background:rgba(255,179,0,0.15); color:#8A5D00;}
 .status-chip.progress{ background:rgba(54,150,243,0.12); color:#1B6FCB;}
@@ -389,17 +419,17 @@ footer{ padding:50px clamp(20px,5vw,64px); text-align:center; color:var(--muted)
       <p>Six simple stages from curiosity to a fully monitored solar installation.</p>
     </div>
     <div class="steps-row">
-      <div class="step done"><div class="step-num">1</div><span class="label">Learn Solar</span></div>
+      <div class="step done" onclick="go('education')" title="Go to Education Hub"><div class="step-num">1</div><span class="label">Learn Solar</span></div>
       <div class="step-arrow">→</div>
-      <div class="step done"><div class="step-num">2</div><span class="label">Calculate</span></div>
+      <div class="step done" onclick="go('calculator')" title="Go to Calculator"><div class="step-num">2</div><span class="label">Calculate</span></div>
       <div class="step-arrow">→</div>
-      <div class="step"><div class="step-num">3</div><span class="label">Compare Quotes</span></div>
+      <div class="step" onclick="go('quotes')" title="Go to Quotes"><div class="step-num">3</div><span class="label">Compare Quotes</span></div>
       <div class="step-arrow">→</div>
-      <div class="step"><div class="step-num">4</div><span class="label">Checkout</span></div>
+      <div class="step" onclick="go('checkout')" title="Go to Checkout"><div class="step-num">4</div><span class="label">Checkout</span></div>
       <div class="step-arrow">→</div>
-      <div class="step"><div class="step-num">5</div><span class="label">Installation</span></div>
+      <div class="step" onclick="go('dashboard')" title="Go to Project Tracking"><div class="step-num">5</div><span class="label">Installation</span></div>
       <div class="step-arrow">→</div>
-      <div class="step"><div class="step-num">6</div><span class="label">Track Project</span></div>
+      <div class="step" onclick="go('dashboard')" title="Go to Project Tracking"><div class="step-num">6</div><span class="label">Track Project</span></div>
     </div>
   </div>
 </section>
@@ -550,17 +580,17 @@ footer{ padding:50px clamp(20px,5vw,64px); text-align:center; color:var(--muted)
       <button data-tab="faqs">FAQs</button>
     </div>
     <div id="eduArticles" class="edu-grid">
-      <div class="edu-card"><div class="edu-thumb">📘</div><div class="edu-body"><span class="tag">Solar Basics</span><h4>How Solar Panels Actually Generate Power</h4><p>A plain-English walkthrough of photovoltaic cells, inverters and net metering.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb">🏛️</div><div class="edu-body"><span class="tag">Government Subsidies</span><h4>2026 Subsidy & Incentive Guide</h4><p>Every rebate and tax benefit available to residential solar buyers this year.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb">🔋</div><div class="edu-body"><span class="tag">Battery Guide</span><h4>Lithium vs. Lead-Acid: Which Battery Fits You</h4><p>Compare lifespan, depth-of-discharge and total cost of ownership.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb">🧰</div><div class="edu-body"><span class="tag">Maintenance</span><h4>The 10-Minute Monthly Panel Checklist</h4><p>Keep your system at peak output with this simple maintenance routine.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb">📈</div><div class="edu-body"><span class="tag">Solar Basics</span><h4>Reading Your Production Dashboard</h4><p>Understand kWh, peak sun hours and performance ratio at a glance.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb">🧾</div><div class="edu-body"><span class="tag">Government Subsidies</span><h4>Claiming Your Rebate: Step by Step</h4><p>The exact paperwork and timeline for subsidy disbursement.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb">📘</div><div class="edu-body"><span class="tag">Solar Basics</span><h4>How Solar Panels Actually Generate Power</h4><p>A plain-English walkthrough of photovoltaic cells, inverters and net metering.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb">🏛️</div><div class="edu-body"><span class="tag">Government Subsidies</span><h4>2026 Subsidy & Incentive Guide</h4><p>Every rebate and tax benefit available to residential solar buyers this year.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb">🔋</div><div class="edu-body"><span class="tag">Battery Guide</span><h4>Lithium vs. Lead-Acid: Which Battery Fits You</h4><p>Compare lifespan, depth-of-discharge and total cost of ownership.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb">🧰</div><div class="edu-body"><span class="tag">Maintenance</span><h4>The 10-Minute Monthly Panel Checklist</h4><p>Keep your system at peak output with this simple maintenance routine.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb">📈</div><div class="edu-body"><span class="tag">Solar Basics</span><h4>Reading Your Production Dashboard</h4><p>Understand kWh, peak sun hours and performance ratio at a glance.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb">🧾</div><div class="edu-body"><span class="tag">Government Subsidies</span><h4>Claiming Your Rebate: Step by Step</h4><p>The exact paperwork and timeline for subsidy disbursement.</p></div></div>
     </div>
     <div id="eduVideos" class="edu-grid" style="display:none;">
-      <div class="edu-card"><div class="edu-thumb"><div class="play-icon">▶</div></div><div class="edu-body"><span class="tag">4:12</span><h4>Installation Day: What To Expect</h4><p>A full walkthrough of a real residential installation.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb"><div class="play-icon">▶</div></div><div class="edu-body"><span class="tag">6:45</span><h4>Choosing Between Hybrid Inverters</h4><p>Our engineers compare three popular inverter models.</p></div></div>
-      <div class="edu-card"><div class="edu-thumb"><div class="play-icon">▶</div></div><div class="edu-body"><span class="tag">3:20</span><h4>How the Solar Calculator Works</h4><p>Behind the formulas that power our sizing tool.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb"><div class="play-icon">▶</div></div><div class="edu-body"><span class="tag">4:12</span><h4>Installation Day: What To Expect</h4><p>A full walkthrough of a real residential installation.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb"><div class="play-icon">▶</div></div><div class="edu-body"><span class="tag">6:45</span><h4>Choosing Between Hybrid Inverters</h4><p>Our engineers compare three popular inverter models.</p></div></div>
+      <div class="edu-card" onclick="showToast('📖 Opening: '+this.querySelector('h4').textContent)"><div class="edu-thumb"><div class="play-icon">▶</div></div><div class="edu-body"><span class="tag">3:20</span><h4>How the Solar Calculator Works</h4><p>Behind the formulas that power our sizing tool.</p></div></div>
     </div>
     <div id="eduFaqs" style="display:none; max-width:760px; margin:0 auto;">
       <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Do I need to be home during installation? <span>+</span></div><div class="faq-a">No — but we recommend it for the first two hours so our engineer can walk you through your system's controls.</div></div>
@@ -759,7 +789,8 @@ function renderQuotes(){
       <td><span class="stars-sm">${'★'.repeat(v.rating)}${'☆'.repeat(5-v.rating)}</span></td>
       <td>${v.warranty}</td><td>${v.delivery}</td>
       <td><span class="price-tag">₹${price}L</span></td>
-      <td><button class="select-btn ${selectedVendor===i?'selected':''}" onclick="selectVendor(${i})">${selectedVendor===i?'Selected':'Select'}</button></td>`;
+      <td><button class="select-btn ${selectedVendor===i?'selected':''}" onclick="event.stopPropagation(); selectVendor(${i})">${selectedVendor===i?'Selected':'Select'}</button></td>`;
+    tr.addEventListener('click', ()=>selectVendor(i));
     t.appendChild(tr);
   });
   document.getElementById('approveBtn').disabled = selectedVendor===null;
@@ -822,6 +853,7 @@ function renderProducts(){
       </div>`;
     card.querySelector('.product-img').addEventListener('click', ()=>openProduct(idx));
     card.querySelector('h4').addEventListener('click', ()=>openProduct(idx));
+    card.addEventListener('click', ()=>openProduct(idx));
     grid.appendChild(card);
   });
 }
@@ -873,6 +905,12 @@ function openProduct(idx){
   modal.classList.add('open');
 }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click', e=>{ if(e.target===m) m.classList.remove('open'); });
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+});
 
 /* ============ EDUCATION ============ */
 document.getElementById('eduTabs').addEventListener('click', e=>{
@@ -927,21 +965,25 @@ function openPartner(i){
 
 /* ============ CUSTOMER DASHBOARD ============ */
 const timelineStages = [
-  {name:'Order Confirmed', date:'Jul 2, 2026', desc:'Your order and payment were confirmed.', state:'done'},
-  {name:'Design', date:'Jul 5, 2026', desc:'Engineering team finalized panel layout.', state:'done'},
-  {name:'Materials Packed', date:'Jul 20, 2026', desc:'All components packed and dispatched from warehouse.', state:'current'},
-  {name:'Installation', date:'Expected Jul 24, 2026', desc:'On-site installation by your assigned EPC partner.', state:'pending'},
-  {name:'Inspection', date:'Pending', desc:'Quality and safety inspection of the completed system.', state:'pending'},
-  {name:'Completed', date:'Pending', desc:'System activated and monitoring enabled.', state:'pending'},
+  {name:'Order Confirmed', date:'Jul 2, 2026', desc:'Your order and payment were confirmed.', state:'done', engineer:'—', docs:'Invoice, Order Summary', ticket:'—'},
+  {name:'Design', date:'Jul 5, 2026', desc:'Engineering team finalized panel layout.', state:'done', engineer:'Richard Owusu', docs:'Layout Diagram, Load Study', ticket:'—'},
+  {name:'Materials Packed', date:'Jul 20, 2026', desc:'All components packed and dispatched from warehouse.', state:'current', engineer:'Richard Owusu', docs:'Packing List, Dispatch Note', ticket:'#TCK-4821 open'},
+  {name:'Installation', date:'Expected Jul 24, 2026', desc:'On-site installation by your assigned EPC partner.', state:'pending', engineer:'Assigned on arrival', docs:'—', ticket:'—'},
+  {name:'Inspection', date:'Pending', desc:'Quality and safety inspection of the completed system.', state:'pending', engineer:'Pending', docs:'—', ticket:'—'},
+  {name:'Completed', date:'Pending', desc:'System activated and monitoring enabled.', state:'pending', engineer:'Pending', docs:'Warranty Card, Manual', ticket:'—'},
 ];
+let expandedStage=2;
 function renderTimeline(){
   const el = document.getElementById('custTimeline');
   el.innerHTML='';
   timelineStages.forEach((s,i)=>{
     const item = document.createElement('div');
-    item.className = 'tl-item '+(s.state==='done'?'done':s.state==='current'?'current':'');
+    item.className = 'tl-item '+(s.state==='done'?'done':s.state==='current'?'current':'')+(expandedStage===i?' expanded':'');
     item.innerHTML = `<div class="tl-dot-wrap"><div class="tl-dot">${s.state==='done'?'✓':i+1}</div>${i<timelineStages.length-1?'<div class="tl-line"></div>':''}</div>
-      <div class="tl-content"><h4>${s.name}</h4><p>${s.desc}</p><div class="date">${s.date}</div></div>`;
+      <div class="tl-content" style="flex:1;"><h4>${s.name}</h4><p>${s.desc}</p><div class="date">${s.date}</div>
+        <div class="tl-detail"><div class="row"><span>Assigned Engineer</span><b>${s.engineer}</b></div><div class="row"><span>Documents</span><b>${s.docs}</b></div><div class="row"><span>Support Ticket</span><b>${s.ticket}</b></div></div>
+      </div>`;
+    item.addEventListener('click', ()=>{ expandedStage = expandedStage===i? -1 : i; renderTimeline(); });
     el.appendChild(item);
   });
 }
@@ -958,6 +1000,7 @@ function renderCheckout(){
     const n=i+1;
     const step=document.createElement('div'); step.className='co-step '+(n<checkoutStep?'done':n===checkoutStep?'current':'');
     step.innerHTML = `<div class="co-dot">${n<checkoutStep?'✓':n}</div><div class="co-label">${s}</div>`;
+    if(n<checkoutStep){ step.title='Jump back to '+s; step.addEventListener('click', ()=>{ checkoutStep=n; renderCheckout(); }); }
     prog.appendChild(step);
     if(i<steps.length-1){ const line=document.createElement('div'); line.className='co-line'; prog.appendChild(line); }
   });
