@@ -59,7 +59,8 @@ button:focus-visible, [tabindex]:focus-visible, input:focus-visible, .radio-opt:
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom:1px solid var(--line);
 }
-.logo{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; letter-spacing:-0.02em;}
+.logo{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; letter-spacing:-0.02em; cursor:pointer; transition:.2s;}
+.logo:hover{ opacity:.75;}
 .logo .dot{ width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--accent)); box-shadow:0 0 0 4px rgba(255,179,0,0.15);}
 .navlinks{ display:flex; gap:4px; background:var(--white); padding:6px; border-radius:100px; box-shadow: var(--shadow-card); }
 .navlinks button{
@@ -359,7 +360,7 @@ footer{ padding:50px clamp(20px,5vw,64px); text-align:center; color:var(--muted)
 <body>
 
 <nav class="navbar">
-  <div class="logo"><span class="dot"></span> SOLVXCLUB</div>
+  <div class="logo" onclick="go('landing')" title="Go to Homepage"><span class="dot"></span> SOLVXCLUB</div>
   <div class="navlinks" id="navlinks">
     <button data-page="landing" class="active">Home</button>
     <button data-page="calculator">Calculator</button>
